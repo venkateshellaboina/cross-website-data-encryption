@@ -86,7 +86,7 @@ import DatePicker from "react-datepicker";
 
             })
             response = await response.json()
-            let token = response.content + "|" + response.iv
+            let token = response.hashedData + "|" + response.initialisationVector
             this.setState({
                 token
             }, () => {

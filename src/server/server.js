@@ -44,12 +44,9 @@ app.post('/decrypt', (req, res) => {
     var iv = req.body.token.split('|')[1]
 
     let d = {
-        content: token,
-        iv: iv
+        initialisationVector: iv,
+        hashedData: token
     }
-
-    console.log(d)
-
  
     const hash = decrypt(d);
     let hash_values = hash.split('|')

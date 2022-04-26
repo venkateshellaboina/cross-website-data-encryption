@@ -1,29 +1,28 @@
 const crypto = require('crypto');
 
-const algorithm = 'aes-256-ctr';
-const secretKey = 'vOVH6sdmpNWjRRIqCc7rdxs01lwHzfr3';
-const iv = crypto.randomBytes(16);
+const AES256 = 'aes-256-ctr';
+const key = 'vOVH6sdmpNWjRRIqCc7rdxs01lwHzfr3';
+const initialisationVector = crypto.randomBytes(16);
 
-const encrypt = (text) => {
+const encrypt = (data) => {
 
-    const cipher = crypto.createCipheriv(algorithm, secretKey, iv);
+    const cpr = crypto.createCipheriv(AES256, key, initialisationVector);
 
-    const encrypted = Buffer.concat([cipher.update(text), cipher.final()]);
+    const data_encrypted = Buffer.concat([cpr.update(data), cpr.final()]);
 
-    console.log('The input data is encrypted');
     return {
-        iv: iv.toString('hex'),
-        content: encrypted.toString('hex')
+        initialisationVector: initialisationVector.toString('hex'),
+        hashedData: data_encrypted.toString('hex')
     };
 };
 
-const decrypt = (hash) => {
+const decrypt = (data) => {
 
-    const decipher = crypto.createDecipheriv(algorithm, secretKey, Buffer.from(hash.iv, 'hex'));
+    const dcpr= crypto.createDecipheriv(AES256, key, Buffer.from(data.initialisationVector, 'hex'));
 
-    const decrpyted = Buffer.concat([decipher.update(Buffer.from(hash.content, 'hex')), decipher.final()]);
+    const data_decrpyted = Buffer.concat([dcpr.update(Buffer.from(data.hashedData, 'hex')), dcpr.final()]);
 
-    return decrpyted.toString();
+    return data_decrpyted.toString();
 };
 
 module.exports = {

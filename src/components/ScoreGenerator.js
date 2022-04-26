@@ -15,7 +15,7 @@ class ScoreGenerator extends React.Component{
             showSubmit: false,
             token: this.props.params.token,
             datasent: false,
-            circScore: 66
+            // circScore: 66
         }
         console.log(this.props.params.token)
     }
